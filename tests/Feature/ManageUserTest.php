@@ -3,10 +3,9 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class UserManageTest extends TestCase
+class ManageUserTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -38,5 +37,28 @@ class UserManageTest extends TestCase
         $this->actingAs($user)
             ->get(route('manage.user'))
             ->assertStatus(403);
+    }
+
+    /** @test */
+    public function it_shows_add_user_form_to_allowed_user()
+    {
+        $user = $this->createUserWithRole('super_admin');
+
+        $this->actingAs($user)
+            ->get(route('manage.user.add'))
+            ->assertStatus(200);
+    }
+
+    /** @test */
+    public function it_requires_valid_fields()
+    {
+        $user = $this->createUserWithRole('super_admin');
+
+        $resp = $this->actingAs($user)
+            ->json('POST', route('manage.user.save'), []);
+
+        $this->assertValidationError('name', $resp);
+        $this->assertValidationError('email', $resp);
+        $this->assertValidationError('password', $resp);
     }
 }
