@@ -30,7 +30,7 @@
         <label for="role">Select role</label>
         <select class="form-control @error('email') is-invalid @enderror" name="role" id="role">
             @foreach($roles as $role)
-                <option value="{{$role->id}}">{{$role->name}}</option>
+                <option value="{{$role->id}}">{{Str::studly($role->name)}}</option>
             @endforeach
         </select>
     </div>

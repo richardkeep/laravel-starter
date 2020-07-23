@@ -11,7 +11,7 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="card">
-                    <div class="py-2 px-2">
+                    <div class="py-2 px-3">
                         <strong>Manage users</strong>
                     </div>
                     <ul class="list-group list-group-flush">
