@@ -3,17 +3,17 @@
 namespace App\Services;
 
 
-use Illuminate\Support\Facades\Auth;
+use App\User;
 use Spatie\Permission\Models\Role;
 
 class RoleService
 {
-    public function getRoles()
+    public function getRoles(User $currentUser)
     {
-        $currentUser = Auth::user();
-
         return Role::query()
             ->when(!$currentUser->hasRole('super_admin'), function ($query) {
+                // only super admin should have the ability
+                // to create another super admin
                 return $query->where('name', '!=', 'super_admin');
             })
             ->orderBy('name')

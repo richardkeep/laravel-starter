@@ -6,6 +6,7 @@ use App\Services\RoleService;
 use App\Services\UserService;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ManageUserController extends Controller
 {
@@ -36,7 +37,7 @@ class ManageUserController extends Controller
     {
         return view('admin.user-add', [
             'submit_url' => route('manage.user.save'),
-            'roles' => $this->roleService->getRoles(),
+            'roles' => $this->roleService->getRoles(Auth::user()),
         ]);
     }
 
@@ -46,9 +47,10 @@ class ManageUserController extends Controller
             'name' => 'required|min:3',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6',
+            'role' => 'required|exists:roles,id',
         ]);
 
-        $this->userService->createUser($postData);
+        $this->userService->createUser(Auth::user(), $postData);
 
         return redirect()
             ->route('manage.user')
