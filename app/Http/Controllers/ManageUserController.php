@@ -2,15 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\RoleService;
 use App\Services\UserService;
 use App\User;
 use Illuminate\Http\Request;
 
 class ManageUserController extends Controller
 {
-    public function index(UserService $userService)
+    private $userService;
+    private $roleService;
+
+    public function __construct(UserService $userService, RoleService $roleService)
     {
-        $users = $userService->getUsersAdmin();
+        $this->userService = $userService;
+        $this->roleService = $roleService;
+    }
+
+    public function index()
+    {
+        $users = $this->userService->getUsersAdmin();
 
         return view('admin.user-listing', [
             'users' => $users,
@@ -25,11 +35,12 @@ class ManageUserController extends Controller
     public function add()
     {
         return view('admin.user-add', [
-            'submit_url' => route('manage.user.save')
+            'submit_url' => route('manage.user.save'),
+            'roles' => $this->roleService->getRoles(),
         ]);
     }
 
-    public function store(Request $request, UserService $userService)
+    public function store(Request $request)
     {
         $postData = $this->validate($request, [
             'name' => 'required|min:3',
@@ -37,7 +48,7 @@ class ManageUserController extends Controller
             'password' => 'required|min:6',
         ]);
 
-        $userService->createUser($postData);
+        $this->userService->createUser($postData);
 
         return redirect()
             ->route('manage.user')

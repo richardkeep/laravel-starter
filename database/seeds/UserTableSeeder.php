@@ -14,7 +14,7 @@ class UserTableSeeder extends Seeder
     public function run()
     {
         Role::create(['name' => 'super_admin']);
-
+        Role::create(['name' => 'admin']);
         Role::create(['name' => 'user']);
 
         User::create([
@@ -24,15 +24,9 @@ class UserTableSeeder extends Seeder
         ])->assignRole('super_admin');
 
         User::create([
-            'name' => 'Piyush Maurya',
-            'email' => 'piyush.maurya@focalworks.in',
+            'name' => 'Admin',
+            'email' => 'admin@gmail.com',
             'password' => bcrypt('password'),
-        ])->assignRole('super_admin');
-
-        User::create([
-            'name' => 'Manish Manghwani',
-            'email' => 'manish.manghwani@focalworks.in',
-            'password' => bcrypt('password'),
-        ])->assignRole('super_admin');
+        ])->assignRole('admin');
     }
 }

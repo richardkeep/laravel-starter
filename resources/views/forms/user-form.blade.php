@@ -26,5 +26,14 @@
         @enderror
     </div>
 
+    <div class="form-group">
+        <label for="role">Select role</label>
+        <select class="form-control @error('email') is-invalid @enderror" name="role" id="role">
+            @foreach($roles as $role)
+                <option value="{{$role->id}}">{{$role->name}}</option>
+            @endforeach
+        </select>
+    </div>
+
     <button class="btn btn-success">Save</button>
 </form>
