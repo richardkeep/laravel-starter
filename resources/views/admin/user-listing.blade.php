@@ -2,11 +2,7 @@
 
 @section('content')
     <div class="container">
-        <div class="row mb-4">
-            <div class="col-md-12">
-                <h1>User list</h1>
-            </div>
-        </div>
+        @include('layouts.page-header', ['data' => getBreadCrumbData('manage-user-list')])
 
         <div class="row">
             <div class="col-md-12">
