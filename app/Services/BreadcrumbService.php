@@ -24,6 +24,12 @@ class BreadcrumbService
                 'Home' => route('home'),
                 'Manage' => route('manage'),
                 'Users list' => null
+            ],
+            'manage-user-view' => [
+                "_page_title" => 'View user',
+                'Home' => route('home'),
+                'Manage' => route('manage'),
+                'User details' => null
             ]
         ];
 

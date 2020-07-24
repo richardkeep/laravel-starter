@@ -15,6 +15,7 @@ Route::group(['middleware' => ['role:super_admin|admin']], function () {
     Route::get('admin/manage', [ConfigController::class, 'index'])->name('manage');
     Route::get('admin/manage/users', [ManageUserController::class, 'index'])->name('manage.user');
     Route::get('admin/manage/user/view/{user}', [ManageUserController::class, 'view'])->name('manage.user.view');
+    Route::post('admin/manage/user/update', [ManageUserController::class, 'update'])->name('manage.user.update');
     Route::get('admin/manage/user/add', [ManageUserController::class, 'add'])->name('manage.user.add');
     Route::post('admin/manage/user/add', [ManageUserController::class, 'store'])->name('manage.user.save');
 });

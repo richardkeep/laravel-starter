@@ -30,12 +30,17 @@ class ManageUserController extends Controller
 
     public function view(User $user)
     {
-        return $user;
+        return view('admin.user-edit', [
+            'user' => $user,
+            'roles' => $this->roleService->getRoles(Auth::user()),
+            'submit_url' => route('manage.user.update'),
+        ]);
     }
 
     public function add()
     {
         return view('admin.user-add', [
+            'user' => new User,
             'submit_url' => route('manage.user.save'),
             'roles' => $this->roleService->getRoles(Auth::user()),
         ]);

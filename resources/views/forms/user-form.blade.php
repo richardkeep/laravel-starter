@@ -4,7 +4,7 @@
     <div class="form-group">
         <label for="name">Name</label>
         <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror"
-               value="{{old('name')}}">
+               value="{{old('name', $user->name)}}">
         @error('name')
         <small class="error">{{$message}}</small>
         @enderror
@@ -12,7 +12,8 @@
 
     <div class="form-group">
         <label for="email">Email</label>
-        <input type="text" name="email" id="email" class="form-control @error('email') is-invalid @enderror">
+        <input type="text" name="email" id="email" class="form-control @error('email') is-invalid @enderror"
+               value="{{old('email')}}">
         @error('email')
         <small class="error">{{$message}}</small>
         @enderror
