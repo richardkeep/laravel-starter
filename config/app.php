@@ -229,4 +229,17 @@ return [
 
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Audit event
+    |--------------------------------------------------------------------------
+    |
+    | This will allow user to set whether the application should log events
+    | to CloudWatch as part of logging every event of the application as
+    | part of the Audit logs if required
+    |
+    */
+
+    'audit_logs' => env('AUDIT_LOGS', false),
+
 ];

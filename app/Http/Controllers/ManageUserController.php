@@ -50,7 +50,9 @@ class ManageUserController extends Controller
             'role' => 'required|exists:roles,id',
         ]);
 
-        $this->userService->createUser(Auth::user(), $postData);
+        $user = $this->userService->createUser(Auth::user(), $postData);
+
+        auditEvent(Auth::user()->name . " created a new user {$user->name} with id {$user->id}");
 
         return redirect()
             ->route('manage.user')

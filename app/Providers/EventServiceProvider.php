@@ -2,10 +2,15 @@
 
 namespace App\Providers;
 
+use App\Events\AuditEvent;
+use App\Listeners\AuditEventListener;
+use App\Listeners\LoginEventHandler;
+use App\Listeners\LogoutEventHandler;
+use Illuminate\Auth\Events\Login;
+use Illuminate\Auth\Events\Logout;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -18,6 +23,15 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        AuditEvent::class => [
+            AuditEventListener::class
+        ],
+        Login::class => [
+            LoginEventHandler::class
+        ],
+        Logout::class => [
+            LogoutEventHandler::class
+        ]
     ];
 
     /**

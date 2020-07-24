@@ -1,5 +1,6 @@
 <?php
 
+use App\Services\CloudWatchService;
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
@@ -98,6 +99,22 @@ return [
 
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
+        ],
+
+        'audit' => [
+            'driver' => 'custom',
+            'via' => CloudWatchService::class,
+            'sdk' => [
+                'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
+                'version' => 'latest',
+                'credentials' => [
+                    'key' => env('AWS_ACCESS_KEY_ID'),
+                    'secret' => env('AWS_SECRET_ACCESS_KEY')
+                ]
+            ],
+            'retention' => env('CW_LOG_RETENTION', 90),
+            'level' => env('CW_LOG_LEVEL', 'info'),
+            'stream' => env('CW_STREAM', 'log-stream'),
         ],
     ],
 
