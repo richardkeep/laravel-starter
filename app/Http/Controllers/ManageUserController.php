@@ -37,6 +37,23 @@ class ManageUserController extends Controller
         ]);
     }
 
+    public function update(Request $request)
+    {
+        $postData = $this->validate($request, [
+            'id' => 'required|exists:users,id',
+            'name' => 'required|min:3',
+            'role' => 'required|exists:roles,id',
+        ]);
+
+        $user =$this->userService->updateUser(Auth::user(), $postData);
+
+        auditEvent(Auth::user()->name . " updated a user {$user->name} with id {$user->id}");
+
+        return redirect()
+            ->back()
+            ->with('success', 'User updated');
+    }
+
     public function add()
     {
         return view('admin.user-add', [
